@@ -35,7 +35,7 @@ Audios.getInstance(this).setParams(config)
         .setMediaStateChangedListener(this)
         .setMediaBufferListener(this).playNewAudio();
 ```
-Cautions:you should destroy the audios and remove listeners of audios in `onDestory` in case of Leaking memory.
+Cautions:you should destroy the audios and remove listeners of audios in the method of `onDestory` in case of Leaking memory.
 ```java
 @Override
 protected void onDestroy() {
