@@ -118,8 +118,8 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MSG_TO_UPDATE_PROGRESS:
-                    //MSG_TO_PAUSE or MSG_TO_STOP should not update status
-                    if (hasMessages(MSG_TO_UPDATE_PROGRESS)) {
+                    //MSG_TO_PAUSE or MSG_TO_STOP should not update status,caution the other player gainer focus the mediaplayer is null
+                    if (hasMessages(MSG_TO_UPDATE_PROGRESS) && mediaPlayer != null) {
                         if (mediaStateChangedListener != null) {
                             result.setCurrent(mediaPlayer.getCurrentPosition());
                             mediaStateChangedListener.onStateChanged(Status.PLAY, result);
@@ -344,9 +344,17 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
                 break;
             case AudioManager.AUDIOFOCUS_LOSS:
                 // Lost focus for an unbounded amount of time: stop playback and release media player
-                if (mediaPlayer.isPlaying()) mediaPlayer.stop();
-                mediaPlayer.release();
-                mediaPlayer = null;
+                if (mediaPlayer.isPlaying()) {
+                    mediaPlayer.stop();
+
+                    if (mediaStateChangedListener != null) {
+                        result.setCurrent(mediaPlayer.getCurrentPosition());
+                        mediaStateChangedListener.onStateChanged(Status.STOP, result);
+                    }
+
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+                }
                 break;
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                 // Lost focus for a short time, but we have to stop
@@ -432,11 +440,11 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
 
         if (!mediaPlayer.isPlaying()) {
             mediaPlayer.start();
-        }
 
-        if (mediaStateChangedListener != null) {
-            result.setDuration(mediaPlayer.getDuration());
-            mediaStateChangedListener.onStateChanged(Status.PLAY, result);
+            if (mediaStateChangedListener != null) {
+                result.setDuration(mediaPlayer.getDuration());
+                mediaStateChangedListener.onStateChanged(Status.PLAY, result);
+            }
         }
     }
 
@@ -446,11 +454,11 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         if (mediaPlayer == null) return;
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
-        }
 
-        if (mediaStateChangedListener != null) {
-            result.setCurrent(mediaPlayer.getCurrentPosition());
-            mediaStateChangedListener.onStateChanged(Status.STOP, result);
+            if (mediaStateChangedListener != null) {
+                result.setCurrent(mediaPlayer.getCurrentPosition());
+                mediaStateChangedListener.onStateChanged(Status.STOP, result);
+            }
         }
     }
 
@@ -460,11 +468,11 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.pause();
             resumePosition = mediaPlayer.getCurrentPosition();
-        }
 
-        if (mediaStateChangedListener != null) {
-            result.setCurrent(resumePosition);
-            mediaStateChangedListener.onStateChanged(Status.PAUSE, result);
+            if (mediaStateChangedListener != null) {
+                result.setCurrent(resumePosition);
+                mediaStateChangedListener.onStateChanged(Status.PAUSE, result);
+            }
         }
     }
 
@@ -662,6 +670,7 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
     }
 
     private void handleIncomingActions(Intent intent) {
+
         if (intent == null || intent.getAction() == null) return;
 
         String actionString = intent.getAction();
