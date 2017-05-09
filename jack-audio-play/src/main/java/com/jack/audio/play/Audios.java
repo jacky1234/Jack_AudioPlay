@@ -74,6 +74,14 @@ public class Audios {
     };
 
 
+    private boolean isServiceBound() {
+        if (!serviceBound) {
+            Log.w(TAG, "has not bind to mediaPlayerService！");
+        }
+
+        return serviceBound;
+    }
+
     /**
      * init on {@link Application#onCreate()}
      */
@@ -177,14 +185,6 @@ public class Audios {
         }
     }
 
-    private boolean isServiceBound() {
-        if (!serviceBound) {
-            Log.w(TAG, "has not bind to mediaPlayerService！");
-        }
-
-        return serviceBound;
-    }
-
     public void playNewAudio() {
         handleEvents(JConstant.ACTION_PLAY_NEW_AUDIO);
     }
@@ -205,8 +205,6 @@ public class Audios {
         if (isServiceBound()) {
             mediaPlayerService.setCancelOnPrepared(true);
         }
-
-        StorageUtil.getInstance(context).clearCachedAudio();
     }
 
     /**

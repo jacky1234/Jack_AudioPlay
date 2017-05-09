@@ -1,1 +1,1 @@
-include ':app', ':jack_audio-play'
+include ':app', ':jack-audio-play'

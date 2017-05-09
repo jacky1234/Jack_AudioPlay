@@ -12,6 +12,7 @@ package com.jack.audio.play.module;
 
 public class Result {
     private String activePath;
+    private String token;
 
     /**
      * represent the index of play list
@@ -20,6 +21,14 @@ public class Result {
     private int duration;
     private int current;    //milliseconds
 
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public String getActivePath() {
         return activePath;
@@ -65,6 +74,7 @@ public class Result {
     public String toString() {
         return "Result{" +
                 "activePath='" + activePath + '\'' +
+                ", token='" + token + '\'' +
                 ", position=" + position +
                 ", duration=" + duration +
                 ", current=" + current +

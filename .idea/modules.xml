@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Jack_AudioPlay.iml" filepath="$PROJECT_DIR$/Jack_AudioPlay.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/jack_audio-play/jack_audio-play.iml" filepath="$PROJECT_DIR$/jack_audio-play/jack_audio-play.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jack-audio-play/jack-audio-play.iml" filepath="$PROJECT_DIR$/jack-audio-play/jack-audio-play.iml" />
     </modules>
   </component>
 </project>

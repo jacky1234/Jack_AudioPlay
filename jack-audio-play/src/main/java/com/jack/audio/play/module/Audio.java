@@ -13,9 +13,18 @@ package com.jack.audio.play.module;
 public class Audio {
     //play path
     private String data;
+    private String token;
 
     public Audio(String data) {
         this.data = data;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getData() {

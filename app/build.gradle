@@ -26,5 +26,5 @@ dependencies {
     })
     testCompile 'junit:junit:4.12'
     compile 'com.jakewharton:butterknife:7.0.1'
-    compile project(':jack_audio-play')
+    compile project(':jack-audio-play')
 }

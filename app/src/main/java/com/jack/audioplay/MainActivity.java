@@ -31,6 +31,10 @@ import butterknife.OnClick;
 
 import static android.content.ContentValues.TAG;
 
+/**
+ * see full example link
+ * <a href="https://github.com/jacky1234/Jack_BLOG_All">AudioPlayActivity</a>
+ */
 public class MainActivity extends Activity implements MediaStateChangedListener, MediaBufferingListener, Runnable {
 
     @Bind(R.id.tv_title)
